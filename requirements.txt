@@ -1,0 +1,8 @@
+Flask
+Flask-HTTPAuth
+Flask-RESTful
+itsdangerous
+Jinja2
+six
+xmltodict
+flask_cors
