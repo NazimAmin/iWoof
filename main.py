@@ -1,6 +1,8 @@
 #!flask/bin/python
 import logging
 import os
+import urlfetch
+import urllib
 from flask import Flask, jsonify, abort, make_response, request, url_for
 from flask_restful import Api, Resource, reqparse, fields, marshal
 from flask_httpauth import HTTPBasicAuth
@@ -18,9 +20,24 @@ CORS(app)
 def default():
     # simple get request
     try:
+        #sms('14849290653', 'hey this is a test from pennapps')
         return status()
     except Exception as e:
+        logging.info(e)
         abort(500)
+
+@app.route('/sms') # sms example
+def sms():
+    params = {
+        'api_key': 'c76e6310',
+        'api_secret': 'e801a86852c6efd7',
+        'to': '1484929####',
+        'from': '1267405####',
+        'text': 'try from pennapps'
+    }
+    url = 'https://rest.nexmo.com/sms/json?' + urllib.urlencode(params)
+    res = urlfetch.fetch(url, method='GET')
+    return json.loads(res)
 
 @app.route('/bark', methods=['GET']) # ['GET', 'POST']
 def bark():
